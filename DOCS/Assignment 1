@@ -1,1 +1,13 @@
 Assignment 1: 
+
+Pitching idea: Input mood  → music playlist + recipe. Input song → recipes. Input recipe → music playlist 
+
+Requirements:
+- User must create a profile
+- Third party-authentication require log-in to SNS
+- APIs to recommend recipes, songs (APIs for Spotify and Apple Music and API for recipes )
+- User must provide access to Spotify/Apple Music
+
+Features:
+- Filter, sort by calories and protein
+
