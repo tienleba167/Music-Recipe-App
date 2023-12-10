@@ -23,29 +23,12 @@ const Callback = () => {
 
           // Store the Spotify user ID in local storage
           localStorage.setItem('spotify_user_id', data.spotifyUserId);
+
           await signInWithCustomToken(auth, customToken);
         } catch (error) {
           console.error('Error authenticating with Firebase:', error);
         }
     };
-
-    // useEffect(() => {
-    //     const hash = window.location.hash;
-    //     let token = window.localStorage.getItem("token");
-
-    //     if (!token && hash) {
-    //         token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
-    //         window.location.hash = ""
-    //         window.localStorage.setItem("token", token)
-    //         setToken(token)
-    //         authenticateWithFirebase(token)
-    //         navigate('/profile')
-    //     }
-    //     else{
-    //         navigate('/')
-    //     }
-
-    // }, [navigate]); 
 
     useEffect(() => {
         const hash = window.location.hash
@@ -58,9 +41,9 @@ const Callback = () => {
           }, {});
     
         if (hash.access_token) {
-            authenticateWithFirebase(hash.access_token);
             setToken(hash.access_token);
             localStorage.setItem('spotify_access_token', hash.access_token);
+            authenticateWithFirebase(hash.access_token);
             navigate('/profile');
         } else {
             // navigate('/');
