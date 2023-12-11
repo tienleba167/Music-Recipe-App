@@ -12,11 +12,11 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const spotifyCalls = require('./routes/spotifyCalls');
-// const edamamCalls = require('./routes/edamamCalls');
+const edamamCalls = require('./routes/edamamCalls');
 // const firebaseCalls = require('./routes/firebase');
 
 app.use('/api/spotify', spotifyCalls);
-// app.use('/api/edamam', edamamCalls);
+app.use('/api/edamam', edamamCalls);
 // app.use('/api/firebase', firebaseCalls);
 
 // app.get("/callback", (req, res) => {
@@ -59,19 +59,6 @@ app.post('/api/authenticate', async (req, res) => {
   } catch (error) {
     console.error('Error generating custom token:', error);
     res.status(500).send('Error generating custom token');
-  }
-});
-
-app.get('/recipes/:query', async (req, res) => {
-  const { query } = req.params;
-  try {
-    const response = await axios.get(
-      `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=819c5474&app_key=bca4cd40feb74bbc2c8cd267b7af4af3`
-    );
-    res.json(response.data.hits);
-  } catch (error) {
-    console.error('Error making Edamam API request:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

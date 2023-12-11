@@ -26,20 +26,6 @@ const getUserPlaylists = async (req, res) => {
   }
 };
 
-const getPlaylistTracks = async (req, res) => {
-  try {
-    const accessToken = req.query.access_token;
-    const tracksHref = req.params.tracksHref;
-    const response = await axios.get(tracksHref, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error getting playlist tracks:', error);
-    res.status(500).send('Error getting playlist tracks');
-  }
-};
-
 const getAudioFeatures = async (req, res) => {
   try {
     const accessToken = req.query.access_token;
@@ -81,11 +67,41 @@ const getPlaylistById = async (req, res) => {
   }
 };
 
+
+const getPlaylistByRecipe = async (req, res) => {
+  try {
+    const accessToken = req.query.access_token;
+    const recipeName = req.query.recipeName;
+    const response = await axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(recipeName)}&type=playlist&limit=5`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error getting playlist:', error);
+    res.status(500).send('Error getting playlist by ID');
+  }
+};
+
+const getPlaylistTracks = async (req, res) => {
+  try {
+    const accessToken = req.query.access_token;
+    const playlistId = req.query.playlistId;
+    const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=10`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error getting playlist tracks:', error);
+    res.status(500).send('Error getting playlist tracks');
+  }
+};
+
 router.get('/getUserPlaylists', getUserPlaylists);
-router.get('/getPlaylistTracks/:tracksHref', getPlaylistTracks);
+router.get('/getPlaylistTracks/:playlistId', getPlaylistTracks);
 router.get('/getAudioFeatures/:trackIds', getAudioFeatures);
 router.get('/getUserProfile', getUserProfile);
 router.get('/getPlaylistById/:playlistId', getPlaylistById);
+router.get('/getPlaylistByRecipe/:recipeName', getPlaylistByRecipe);
 
 // Export the helper functions
 module.exports = router;
