@@ -85,6 +85,10 @@ const Profile = () => {
         setSearch('');
     })
 
+    const navigateToSavedPage = () => {
+        navigate('/saved');
+      };
+
 
     return (
         <div>
@@ -93,9 +97,10 @@ const Profile = () => {
             ) : (
                 <>  
                     <Logout onLogout={handleLogout} />
+                    <button className="savedPage" onClick={navigateToSavedPage}>Saved Data</button>
                     <div className="dashboard-container">
                         <div className="dashboard-header">
-                            <h1>{displayName}'s Playlists</h1>
+                            <h1>{displayName} Home Profile</h1>
                         </div>
                         <form onSubmit={getSearch} className='search-form'>
                             <input className='search-bar' type='text' value={search} onChange={e => setSearch(e.target.value)} />
@@ -108,7 +113,6 @@ const Profile = () => {
                                 <p>No recipes found.</p>
                             )}
                         </div>
-
                     </div>
                 </>
             )}

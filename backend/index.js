@@ -4,7 +4,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const app = express();
 const serviceAccount = require('./serviceAccountKey.json');
-const admin = require('./firebase');
+const { admin } = require('./firebase'); 
 require('dotenv').config();
 
 app.use(cors());
@@ -13,15 +13,12 @@ app.use(express.json());
 
 const spotifyCalls = require('./routes/spotifyCalls');
 const edamamCalls = require('./routes/edamamCalls');
-// const firebaseCalls = require('./routes/firebase');
+const firebaseCalls = require('./routes/firebaseCalls');
 
 app.use('/api/spotify', spotifyCalls);
 app.use('/api/edamam', edamamCalls);
-// app.use('/api/firebase', firebaseCalls);
+app.use('/api/firebase', firebaseCalls);
 
-// app.get("/callback", (req, res) => {
-//   res.json({ message: "Hello from server!" });
-// });
 
 app.post('/api/authenticate', async (req, res) => {
   try {

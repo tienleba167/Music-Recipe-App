@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PlaylistTracks from './PlaylistTracks';
 import '../style/PlaylistStyles.css';
+import handleSavePlaylist from './handleSavePlaylist';
 
 function RecipeList({ recipes }) {
   const [loadedRecipes, setLoadedRecipes] = useState([]);
@@ -70,10 +71,21 @@ useEffect(() => {
     return <div>Loading recipes...</div>;
   }
 
+  const savePlaylist = async (playlistId, playlistName) => {
+    try {
+        const userId = localStorage.getItem('spotify_user_id');
+        const message = await handleSavePlaylist(playlistId, userId, playlistName);
+        alert(message);
+    } catch (error) {
+        alert('Failed to save playlist');
+    }
+};
+
 
   // Rendering playlists
   const renderPlaylists = () => {
     return (
+      <div>
       <div className="playlist-container">
         {playlistData && playlistData.playlists && playlistData.playlists.items.map((playlist, index) => (
           <div key={index} className="playlist-item">
@@ -84,10 +96,11 @@ useEffect(() => {
               onClick={() => handlePlaylistClick(playlist.id)}
             />
             <div className="playlist-name" onClick={() => handlePlaylistClick(playlist.id)}> {playlist.name}
-            </div>
-            {selectedPlaylist === playlist.id && <PlaylistTracks playlistId={playlist.id} />}
+            </div>{selectedPlaylist === playlist.id && <PlaylistTracks playlistId={playlist.id} />}
+            <button onClick={() => savePlaylist(playlist.id, playlist.name)} className="save-playlist-button">Save Playlist</button>
           </div>
         ))}
+      </div>
       </div>
     );
   };

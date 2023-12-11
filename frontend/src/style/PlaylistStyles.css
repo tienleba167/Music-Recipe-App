@@ -1,8 +1,7 @@
 .playlist-container {
     position: fixed;
     top: 0;
-    left: 65%;
-    transform: translateX(-50%);
+    right: 0%;
     width: 300px; /* Adjust the width as needed */
     height: 100%;
     overflow-y: auto;

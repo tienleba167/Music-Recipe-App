@@ -6,6 +6,6 @@ admin.initializeApp({
   databaseURL: "https://cs411-project-87e5a-default-rtdb.firebaseio.com"
 });
 
-// const database = admin.database();
+const database = admin.database();
 
-module.exports = admin;
+module.exports = { database, admin };
