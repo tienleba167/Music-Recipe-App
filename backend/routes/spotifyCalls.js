@@ -26,20 +26,6 @@ const getUserPlaylists = async (req, res) => {
   }
 };
 
-const getAudioFeatures = async (req, res) => {
-  try {
-    const accessToken = req.query.access_token;
-    const trackIds = req.params.trackIds;
-    const response = await axios.get(`https://api.spotify.com/v1/audio-features?ids=${trackIds}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error getting audio features:', error);
-    res.status(500).send('Error getting audio features');
-  }
-};
-
 const getUserProfile = async (req, res) => {
   try {
     const accessToken = req.query.access_token;
@@ -66,7 +52,6 @@ const getPlaylistById = async (req, res) => {
     res.status(500).send('Error getting playlist by ID');
   }
 };
-
 
 const getPlaylistByRecipe = async (req, res) => {
   try {
@@ -98,7 +83,6 @@ const getPlaylistTracks = async (req, res) => {
 
 router.get('/getUserPlaylists', getUserPlaylists);
 router.get('/getPlaylistTracks/:playlistId', getPlaylistTracks);
-router.get('/getAudioFeatures/:trackIds', getAudioFeatures);
 router.get('/getUserProfile', getUserProfile);
 router.get('/getPlaylistById/:playlistId', getPlaylistById);
 router.get('/getPlaylistByRecipe/:recipeName', getPlaylistByRecipe);
