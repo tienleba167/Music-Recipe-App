@@ -1,2 +1,2 @@
-# CS411
-CS411 Project
+# MUSIC RECIPE APP
+
